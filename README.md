@@ -6,7 +6,7 @@ Współpracujesz w rozwoju systemu wspomagającego obsługę Firmy Kurierskiej i
 
 Pudełko to prostopadłościan o zadanych długościach krawędzi (umownie: długość, wysokość, szerokość). Wymiary te mogą być podawane w milimetrach, centymetrach bądź metrach - jako wartości rzeczywiste. Cyfry poza zakresem dla określonej jednostki są odcinane (np. dla `2.54637 m` przyjmujemy `2.546 m` czyli `254.6 cm`, czyli `2546 mm`)!
 
-Przyjmujemy, że maksymalny pojedynczy wymiar pudełka nie przekracza 10 metrów (ze względu na ograniczone możliwości załadunkowe). **W sytuacji przekroczenia tej wielkości należy zgłosić `ArgumentOutOfRangeException`**.
+Przyjmujemy, że maksymalny pojedynczy wymiar pudełka nie przekracza 10 metrów (ze względu na ograniczone możliwości załadunkowe).
 
 Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poniżej warunki:
 
@@ -18,7 +18,7 @@ Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poni
 
 > Sugestia: w aplikacji, zamiast używać długiej nazwy `Pudelko`, możesz zastosować alias (np. `P` wpisując `using P = MyLib.Pudelko;`)
 
-> ⚠️ Wykorzystaj testy jednostkowe dołączone do zadania (testujące tylko część funkcjonalności). Dopisz własne metody testujące, dodaj własne przypadki testowe, modyfikuj kod testów - jeśli uznasz to za stosowne.
+> ⚠️ Wykorzystaj testy jednostkowe (MS Test v2) dołączone do zadania (testujące tylko część funkcjonalności). Dopisz własne metody testujące, dodaj własne przypadki testowe, modyfikuj kod testów - jeśli uznasz to za stosowne.
 
 ## Wytyczne
 
@@ -43,9 +43,11 @@ Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poni
 4. Reprezentacja tekstowa, `ToString`
 
    * Zapewnij reprezentację tekstową obiektu według formatu:
+
      `«liczba» «jednostka» × «liczba» «jednostka» × «liczba» «jednostka»`
+
    * znak rozdzielający wymiary, to znak mnożenia `×` (Unicode: U+00D7, multiplication sign, times)
-   * pomiędzy liczbami, wymiarami i znakami `×` dokładnie jedna spacja
+   * pomiędzy liczbami, wymiarami i znakami `×` jest dokładnie jedna spacja
    * domyślne formatowanie liczb w metrach, z dokładnością 3 miejsc po przecinku
    * przeciążenie: funkcja `ToString(string format)` przyjmuje następujące kody formatów: `m`, `cm` oraz `mm`.
        * dla formatu `"m"` wartości podawane są ze stałą dokładnością 3. miejsc po przecinku
@@ -61,11 +63,11 @@ Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poni
 
 5. Zaimplementuj _property_ `Objetosc` zwracające objętość pudełka w m³. Wynik zaokrąglij (`Math.Round`) do 9. miejsc po przecinku.
 
-6. Zaimplementuj _property_ `Pole` zwracające pole powierzchni całkowitej pudełka (prostopadłościanu). Wynik zaokrąglij (`Math.Round`) do 6. miejsc po przecinku.
+6. Zaimplementuj _property_ `Pole` zwracające pole powierzchni całkowitej pudełka (prostopadłościanu) w m². Wynik zaokrąglij (`Math.Round`) do 6. miejsc po przecinku.
 
 7. Equals
-   * Dwa pudelka są takie same, jeśli mają takie same wymiary w tych samych jednostkach, z dokładnością do kolejności wymiarów, tzn. pudełko `P(1, 2.1, 3.05)` jest takie samo jak pudełko `P(1, 3.05, 2.1)`, a to jest takie samo jak `P(2.1, 1, 3.05)`, a to jest takie samo ja `P(2100, 1000, 3050, unit: UnitOfMeasure.milimeter)`, i.t.d.
-   * Zaimplementuj poprawnie interfejs `IEquatable<Pudelko>`.
+   * Dwa pudelka są takie same, jeśli mają takie same wymiary w tych samych jednostkach, z dokładnością do kolejności wymiarów, tzn. pudełko `P(1, 2.1, 3.05)` jest takie samo jak pudełko `P(1, 3.05, 2.1)`, a to jest takie samo jak `P(2.1, 1, 3.05)`, a to jest takie samo jak `P(2100, 1000, 3050, unit: UnitOfMeasure.milimeter)`, i.t.d.
+   * Zaimplementuj interfejs `IEquatable<Pudelko>`.
    * Zaimplementuj `Equals(object)` i `GetHashCode()`.
    * Zaimplementuj przeciążone operatory `==` oraz `!=`.
 
@@ -73,30 +75,32 @@ Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poni
 
 9. Operacje konwersji
    * Zdefiniuj konwersję jawną (_explicit_) z typu `Pudelko` na typ `double[]`, zwracającą tablicę wartości długości krawędzi pudełka w metrach, w kolejności `A`, `B`, `C`.
-   * Zdefiniuj konwersję niejawną z typu `ValueTuple<int,int,int>` na typ `Pudełko`, przyjmując, że podawane wartości są w milimetrach.
+   * Zdefiniuj konwersję niejawną (_implicit_) z typu `ValueTuple<int,int,int>` na typ `Pudelko`, przyjmując, że podawane wartości są w milimetrach.
 
-11. Przeglądanie długości krawędzi - indexer
-   * Zaimplementuj mechanizm przeglądania (tylko do odczytu, bo obiekt ma być _immutable_) długości krawędzi poprzez odwołanie się do indeksów (`p[i]` oznacza _i_-ty wymiar pudełka `p`).
+10. Przeglądanie długości krawędzi - indexer
 
-12. Przeglądanie długości krawędzi - pętla `foreach`
-    * Zaimplementuj mechanizm przeglądania długości krawędzi pudełka za pomocą pętli `foreach` w kolejności od `A` do `C`.
+    * Zaimplementuj mechanizm przeglądania (tylko do odczytu, bo obiekt ma być _immutable_) długości krawędzi poprzez odwołanie się do indeksów (`p[i]` oznacza _i_-ty wymiar pudełka `p`).
 
-13. Metoda parsująca ze `string`
+11. Przeglądanie długości krawędzi - pętla `foreach`
+    * Zaimplementuj mechanizm przeglądania długości krawędzi pudełka za pomocą pętli `foreach` w kolejności od `A` do `C` (np. `foreach(var x in p) { ... }`). Formalnie, jest to implementacja interfejsu `IEnumerable`.
+
+12. Metoda parsująca ze `string`
     * Zaimplementuj statyczną metodę `Parse` komplementarną do tekstowej reprezentacji pudełka (`ToString()` oraz `ToString(format)`). Przykładowo `new P(2.5, 9.321, 0.1) == P.Parse("2.500 m × 9.321 m × 0.100 m")`.
     * Rozważ różne przypadki jednostek miar (patrz: konstruktor i formatowana metoda `ToString`).
 
-14. Pamiętaj o zapewnieniu pełnej niezmienniczości obiektom klasy `Pudelko` oraz o zapieczętowaniu klasy.
+13. Pamiętaj o zapewnieniu pełnej niezmienniczości obiektom klasy `Pudelko` oraz o zapieczętowaniu klasy.
 
-15. Utwórz testy jednostkowe (_unit tests_) dla:
-    * _properties_ `Objetosc`,
+14. Utwórz testy jednostkowe (_unit tests_) dla:
+    * _properties_ `Objetosc` i `Pole`
     * operatora łączenia pudełek,
     * operatora równości pudełek,
+
     przy kilku, reprezentatywnych zestawach danych.
 
-16. Metody rozszerzające
-    * W projekcie _Console App_ utwórz metodę rozszerzającą klasę `Pudelko` o nazwie `Kompresuj`, która zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne.
+15. Metody rozszerzające
+    * W projekcie _Console App_ utwórz **metodę rozszerzającą** klasę `Pudelko` o nazwie `Kompresuj`, która zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne.
 
-17. Sortowanie pudełek
+16. Sortowanie pudełek
     * W funkcji `Main` programu głównego (aplikacja konsolowa) utwórz listę kliku różnych pudełek, używając różnych wariantów konstruktora.
     * Wypisz pudełka umieszczone na liście (po jednym w wierszu).
     * Posortuj tę listę według następującego kryterium:
