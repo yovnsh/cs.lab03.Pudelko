@@ -2,6 +2,16 @@
 
 * Krzysztof Molenda, ver. 0.2/2020
 
+## Cel, zakres
+
+* _well-formed type_, implementacje kluczowych interfejsów (`IEquatable`, `IFormatable`, `IEnumerable`), przeciążenia operatorów (`==`, `!=`, jawnej i niejawnej konwersji, indekser), metody rozszerzające, definiowanie porządku sortowania (delegat `Comparison`), testy jednostkowe
+* orientacyjny czas realizacji - przy sprawnym programowaniu ok. 60 minut
+* orientacyjna ilość kodu - ok. 200 linii dla implementacji klasy, ok. 200 dla implementacji testów jednostkowych
+
+---
+
+## Sformułowanie problemu
+
 Współpracujesz w rozwoju systemu wspomagającego obsługę Firmy Kurierskiej i optymalizującego załadunek. Twoim zadaniem jest opracować klasę `Pudelko`.
 
 Pudełko to prostopadłościan o zadanych długościach krawędzi (umownie: długość, wysokość, szerokość). Wymiary te mogą być podawane w milimetrach, centymetrach bądź metrach - jako wartości rzeczywiste. Cyfry poza zakresem dla określonej jednostki są odcinane (np. dla `2.54637 m` przyjmujemy `2.546 m` czyli `254.6 cm`, czyli `2546 mm`)!
@@ -71,7 +81,7 @@ Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poni
    * Zaimplementuj `Equals(object)` i `GetHashCode()`.
    * Zaimplementuj przeciążone operatory `==` oraz `!=`.
 
-8. Zdefiniuj przeciążony operator łączenia pudełek ( `+` ) działający wg zasady: wynikiem `p1 + p2` jest najmniejsze pudełko o takich wymiarach, które pomieści oba pudełka. Wyobraź sobie zapakowanie pudełek `p1` oraz `p2` w jedno pudełko odpowiednio większe, ale o najmniejszych możliwych wymiarach.
+8. Zdefiniuj przeciążony operator łączenia pudełek ( `+` ) działający wg zasady: wynikiem `p1 + p2` jest najmniejsze pudełko o takich wymiarach, które pomieści oba pudełka (w sensie: o najmniejszej objętości). Wyobraź sobie zapakowanie pudełek `p1` oraz `p2` w jedno pudełko odpowiednio większe, ale o najmniejszych możliwych wymiarach.
 
 9. Operacje konwersji
    * Zdefiniuj konwersję jawną (_explicit_) z typu `Pudelko` na typ `double[]`, zwracającą tablicę wartości długości krawędzi pudełka w metrach, w kolejności `A`, `B`, `C`.
@@ -114,7 +124,9 @@ Twoim zadaniem jest zaimplementowanie klasy `Pudelko` spełniającej podane poni
 W funkcji `Main` napisz kod potwierdzający poprawność wykonania poszczególnych implementacji.
 ___
 
-Do oceny przesyłasz _solution_ z projektami, skompresowane w formie archiwum ZIP. Przed spakowaniem sprawdź, czy kod się kompiluje i usuń pliki binarne (_Build-> Clean Solution_). Kod z błędami nie będzie oceniany.
+## Ocena
+
+Do oceny przesyłasz _solution_ z projektami, skompresowane w formie archiwum ZIP. Przed spakowaniem sprawdź, czy kod się kompiluje i usuń pliki binarne (_Build-> Clean Solution_). Usuń foldery `bin/`, `obj/` czy `TestResults` zawierające pliki binarne - przesyłasz tylko strukturę projektu z plikami konfiguracyjnymi oraz kod w plikach `.cs`. Kod z błędami nie będzie oceniany.
 
 Rozmiar klasy `Pudelko` - w moim przypadku - nie przekroczył 200 linii kodu, przy zachowaniu standardowego, automatycznego formatowania C#. Nie zwracałem uwagi na maksymalne uproszczenie czy kompresję zapisu.
 
