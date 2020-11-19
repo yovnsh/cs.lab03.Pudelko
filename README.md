@@ -1,4 +1,4 @@
-# Zadanie. _Well formed class_ - `Pudelko`
+# Lab-03. _Well formed class_ - `Pudelko`
 
 * Krzysztof Molenda, ver. 0.2/2020
 
