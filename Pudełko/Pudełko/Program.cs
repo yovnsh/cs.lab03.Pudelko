@@ -11,7 +11,7 @@
         double C { get; init; }
 
         double Objetosc { get => Math.Round(A * B * C, 9); }
-        double Pole { get => Math.Round(2*(A * B + A * C + B * C), 6); }
+        double Pole { get => Math.Round(2 * (A * B + A * C + B * C), 6); }
 
         public Pudelko(double? a = null, double? b = null, double? c = null, M XD = M.meter)
         {
@@ -60,6 +60,65 @@
                 default: throw new FormatException();
             }
             return $"{assunit(this.A, nazwajednostki).ToString(nieformat)} {format} × {assunit(this.B, nazwajednostki).ToString(nieformat)} {format} × {assunit(this.C, nazwajednostki).ToString(nieformat)} {format}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !this.GetType().Equals (obj.GetType()))
+            {
+                return false;
+            }
+            return Equals(obj as Pudelko);
+        }
+
+        public bool Equals(Pudelko? innepudelko)
+        {
+            if (ReferenceEquals(innepudelko, null))
+            {
+                return false;
+            }
+            List<double> uno = new List<double>() { this.A, this.B, this.C };
+
+            List<double> dno = new List<double>() { innepudelko.A, innepudelko.B, innepudelko.C };
+
+            foreach (double d in uno)
+            {
+                if (!dno.Contains(d))
+                {
+                    return false;
+                } 
+                dno.Remove(d);
+            }
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return (A,B,C).GetHashCode();
+        }
+
+        public static bool operator == (Pudelko pudlouno, Pudelko pudloduo)
+        {
+            if (ReferenceEquals (pudlouno, pudloduo))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals (pudloduo, null)) 
+            {
+                return false;
+            }
+
+            if (ReferenceEquals (pudloduo, null))
+            {
+                return false;
+            }
+            return pudlouno.Equals (pudloduo);
+        }
+
+        public static bool operator !=(Pudelko pudlouno, Pudelko pudloduo)
+        {
+            return !(pudlouno == pudloduo);
         }
 
         public static double mnoznik (M jakasnazwa)
