@@ -2,6 +2,8 @@
 {
     using P = KwadratŚmierdzący.Pudelko;
     using M = KwadratŚmierdzący.UnitOfMasure;
+    using System.Net.Http.Headers;
+
     sealed class Pudelko
     {
         double A { get; init; }
@@ -25,6 +27,37 @@
             }
         }
 
+        public override string ToString()
+        {
+            return ToString("m");
+        }
+
+        public string ToString(string format)
+        {
+            if (format == null)
+            {
+                format = "m";
+            }
+            string nieformat;
+            M nazwajednostki;
+            switch (format)
+            {
+                case "m":
+                    nazwajednostki = M.meter;
+                    nieformat = "0.000";
+                    break;
+                case "cm":
+                    nazwajednostki = M.centimeter;
+                    nieformat = "0.0";
+                    break;
+                case "mm":
+                    nazwajednostki = M.milimeter;
+                    nieformat = "0";
+                    break;
+                default: throw new FormatException();
+            }
+            return $"{assunit(this.A, nazwajednostki).ToString(nieformat)} {format} × {assunit(this.B, nazwajednostki).ToString(nieformat)} {format} × {assunit(this.C, nazwajednostki).ToString(nieformat)} {format}";
+        }
 
         public static double mnoznik (M jakasnazwa)
         {
