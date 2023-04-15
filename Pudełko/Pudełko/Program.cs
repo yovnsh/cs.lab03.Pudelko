@@ -10,6 +10,9 @@
         double B { get; init; }
         double C { get; init; }
 
+        double Objetosc { get => Math.Round(A * B * C, 9); }
+        double Pole { get => Math.Round(2*(A * B + A * C + B * C), 6); }
+
         public Pudelko(double? a = null, double? b = null, double? c = null, M XD = M.meter)
         {
             this.A = Math.Round((a != null) ? fromunit(a, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
