@@ -1,23 +1,23 @@
 ﻿namespace KwadratŚmierdzący
 {
     using P = KwadratŚmierdzący.Pudelko;
-    using M = KwadratŚmierdzący.UnitOfMasure;
+    using M = KwadratŚmierdzący.UnitOfMeasure;
     using System.Net.Http.Headers;
 
-    sealed class Pudelko : IEnumerable<double>
+    public sealed class Pudelko : IEnumerable<double>
     {
-        double A { get; init; }
-        double B { get; init; }
-        double C { get; init; }
+        public double A { get; init; }
+        public double B { get; init; }
+        public double C { get; init; }
 
-        double Objetosc { get => Math.Round(A * B * C, 9); }
-        double Pole { get => Math.Round(2 * (A * B + A * C + B * C), 6); }
+        public double Objetosc { get => Math.Round(A * B * C, 9); }
+        public double Pole { get => Math.Round(2 * (A * B + A * C + B * C), 6); }
 
-        public Pudelko(double? a = null, double? b = null, double? c = null, M XD = M.meter)
+        public Pudelko(double? a = null, double? b = null, double? c = null, M unit = M.meter)
         {
-            this.A = Math.Round((a != null) ? fromunit(a.Value, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
-            this.B = Math.Round((b != null) ? fromunit(b.Value, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
-            this.C = Math.Round((c != null) ? fromunit(c.Value, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
+            this.A = Math.Round((a != null) ? fromunit(a.Value, unit) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
+            this.B = Math.Round((b != null) ? fromunit(b.Value, unit) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
+            this.C = Math.Round((c != null) ? fromunit(c.Value, unit) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
 
             if (this.A <= 0 || this.B <= 0 || this.C <= 0)
             {
@@ -128,7 +128,7 @@
                 a: pudlouno.A + pudloduo.A,
                 b: Math.Max(pudlouno.B, pudloduo.B),
                 c: Math.Max(pudlouno.C, pudloduo.C),
-                XD: M.meter
+                unit: M.meter
                 );
         }
 
@@ -142,7 +142,7 @@
 
         public static implicit operator Pudelko(ValueTuple<int, int, int> jebacinsert)
         {
-            return new Pudelko(a: jebacinsert.Item1, b: jebacinsert.Item2, c: jebacinsert.Item3, XD: M.milimeter);
+            return new Pudelko(a: jebacinsert.Item1, b: jebacinsert.Item2, c: jebacinsert.Item3, unit: M.milimeter);
         }      
         
         public double this[int entf]
@@ -189,7 +189,7 @@
                 string[] ehe = nazwajakas.Split(' ');
                 if (ehe.Length<2)
                 {
-                    throw new ArgumentException("XD");
+                    throw new ArgumentException("unit");
                 }
                 double Value = Convert.ToDouble(ehe[0]);
                 string Valuo = ehe[1];
@@ -217,7 +217,6 @@
             }
             return new Pudelko(Wymiary[0], Wymiary[1], Wymiary[2], wypluted);
         }
-
 
 
         public static double mnoznik (M jakasnazwa)

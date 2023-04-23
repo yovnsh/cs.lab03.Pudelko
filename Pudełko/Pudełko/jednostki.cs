@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KwadratŚmierdzący
 {
-	enum UnitOfMasure
+	public enum UnitOfMeasure
 	{
 		meter,
 		centimeter,
