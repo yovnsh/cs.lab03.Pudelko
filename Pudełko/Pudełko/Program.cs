@@ -174,6 +174,52 @@
             return GetEnumerator();
         }      
 
+        public static Pudelko Parse(string dowolnanazwa)
+        {
+            string[] Values = dowolnanazwa.Split(" × ");
+            if (Values.Length < 3)
+            {
+                throw new ArgumentException("sześcian to sześcian");
+            }
+            double[] Wymiary = new double[3];
+
+            string?Jednostka = null;
+            foreach(string nazwajakas in Values)
+            {
+                string[] ehe = nazwajakas.Split(' ');
+                if (ehe.Length<2)
+                {
+                    throw new ArgumentException("XD");
+                }
+                double Value = Convert.ToDouble(ehe[0]);
+                string Valuo = ehe[1];
+                if (Jednostka == null)
+                {
+                    Jednostka = Valuo;
+                }
+                else if (Jednostka != Valuo)
+                {
+                    throw new ArgumentException();
+                }
+            }
+            M wypluted;
+            switch (Jednostka)
+            {
+                case "m":
+                    wypluted = M.meter; break;
+
+                case "cm":
+                    wypluted = M.centimeter; break;
+
+                case "mm":
+                    wypluted = M.milimeter; break;
+                default: throw new ArgumentException();
+            }
+            return new Pudelko(Wymiary[0], Wymiary[1], Wymiary[2], wypluted);
+        }
+
+
+
         public static double mnoznik (M jakasnazwa)
         {
             switch (jakasnazwa) 
