@@ -121,6 +121,16 @@
             return !(pudlouno == pudloduo);
         }
 
+        public static Pudelko operator + (Pudelko pudlouno, Pudelko pudloduo)
+        {
+            return new Pudelko
+                (
+                a: pudlouno.A + pudloduo.A,
+                b: Math.Max(pudlouno.B, pudloduo.B),
+                c: Math.Max(pudlouno.C, pudloduo.C),
+                XD: M.meter
+                );
+        }
         public static double mnoznik (M jakasnazwa)
         {
             switch (jakasnazwa) 
