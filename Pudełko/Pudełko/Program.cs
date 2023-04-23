@@ -4,7 +4,7 @@
     using M = KwadratŚmierdzący.UnitOfMasure;
     using System.Net.Http.Headers;
 
-    sealed class Pudelko
+    sealed class Pudelko : IEnumerable<double>
     {
         double A { get; init; }
         double B { get; init; }
@@ -161,6 +161,18 @@
                 }
             }
         }
+
+        public IEnumerator<double> GetEnumerator()
+        {
+            yield return this.A;
+            yield return this.B;
+            yield return this.C;
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }      
 
         public static double mnoznik (M jakasnazwa)
         {
