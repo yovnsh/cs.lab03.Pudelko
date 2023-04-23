@@ -15,9 +15,9 @@
 
         public Pudelko(double? a = null, double? b = null, double? c = null, M XD = M.meter)
         {
-            this.A = Math.Round((a != null) ? fromunit(a, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
-            this.B = Math.Round((b != null) ? fromunit(b, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
-            this.C = Math.Round((c != null) ? fromunit(c, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
+            this.A = Math.Round((a != null) ? fromunit(a.Value, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
+            this.B = Math.Round((b != null) ? fromunit(b.Value, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
+            this.C = Math.Round((c != null) ? fromunit(c.Value, XD) : 0.1, 3, MidpointRounding.ToNegativeInfinity);
 
             if (this.A <= 0 || this.B <= 0 || this.C <= 0)
             {
@@ -131,6 +131,20 @@
                 XD: M.meter
                 );
         }
+
+        public static explicit operator double[](Pudelko pudlouno)
+        {
+            return new double[3]
+            {
+                pudlouno.A, pudlouno.B, pudlouno.C
+            };
+        }
+
+        public static implicit operator Pudelko(ValueTuple<int, int, int> jebacinsert)
+        {
+            return new Pudelko(a: jebacinsert.Item1, b: jebacinsert.Item2, c: jebacinsert.Item3, XD: M.milimeter);
+        }      
+        
         public static double mnoznik (M jakasnazwa)
         {
             switch (jakasnazwa) 
