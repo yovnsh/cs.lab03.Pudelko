@@ -145,6 +145,23 @@
             return new Pudelko(a: jebacinsert.Item1, b: jebacinsert.Item2, c: jebacinsert.Item3, XD: M.milimeter);
         }      
         
+        public double this[int entf]
+        {
+            get
+            {
+                switch (entf)
+                {
+                    case 0:
+                        return this.A;
+                    case 1:
+                        return this.B;
+                    case 2:
+                        return this.C;
+                    default: throw new IndexOutOfRangeException();
+                }
+            }
+        }
+
         public static double mnoznik (M jakasnazwa)
         {
             switch (jakasnazwa) 
